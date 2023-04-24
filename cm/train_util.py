@@ -49,6 +49,7 @@ class TrainLoop:
         self.model = model
         self.diffusion = diffusion
         self.data = data
+        self.iterdatal = iter(self.data)
         self.batch_size = batch_size
         self.microbatch = microbatch if microbatch > 0 else batch_size
         self.lr = lr
@@ -165,7 +166,7 @@ class TrainLoop:
             try:
                 batch, cond, label, _ = next(self.iterdatal)
             except:
-                self.iterdatal = iter(self.datal)
+                self.iterdatal = iter(self.data)
                 batch, cond, label, _ = next(self.iterdatal)
 
             self.run_step(batch, cond)
@@ -371,7 +372,7 @@ class CMTrainLoop(TrainLoop):
             try:
                 batch, cond, label, _ = next(self.iterdatal)
             except:
-                self.iterdatal = iter(self.datal)
+                self.iterdatal = iter(self.data)
                 batch, cond, label, _ = next(self.iterdatal)
             self.run_step(batch, cond)
             saved = False
