@@ -162,7 +162,12 @@ class TrainLoop:
 
     def run_loop(self):
         while not self.lr_anneal_steps or self.step < self.lr_anneal_steps:
-            batch, cond = next(self.data)
+            try:
+                batch, cond, label, _ = next(self.iterdatal)
+            except:
+                self.iterdatal = iter(self.datal)
+                batch, cond, label, _ = next(self.iterdatal)
+
             self.run_step(batch, cond)
             if self.step % self.log_interval == 0:
                 logger.dumpkvs()
@@ -363,7 +368,11 @@ class CMTrainLoop(TrainLoop):
             or self.step < self.lr_anneal_steps
             or self.global_step < self.total_training_steps
         ):
-            batch, cond = next(self.data)
+            try:
+                batch, cond, label, _ = next(self.iterdatal)
+            except:
+                self.iterdatal = iter(self.datal)
+                batch, cond, label, _ = next(self.iterdatal)
             self.run_step(batch, cond)
             saved = False
             if (

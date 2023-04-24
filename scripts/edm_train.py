@@ -3,6 +3,8 @@ Train a diffusion model on images.
 """
 
 import argparse
+import torch as th
+from cm.bratsloader import BRATSDataset
 
 from cm import dist_util, logger
 from cm.image_datasets import load_data
@@ -46,7 +48,11 @@ def main():
         image_size=args.image_size,
         class_cond=args.class_cond,
     )
-
+    ds = BRATSDataset(args.data_dir, test_flag=False)
+    data = th.utils.data.DataLoader(
+        ds,
+        batch_size=args.batch_size,
+        shuffle=True)
     logger.log("creating data loader...")
 
     logger.log("training...")
