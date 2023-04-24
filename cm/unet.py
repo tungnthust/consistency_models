@@ -270,7 +270,7 @@ class AttentionBlock(nn.Module):
         num_heads=1,
         num_head_channels=-1,
         use_checkpoint=False,
-        attention_type="flash",
+        attention_type="default",
         encoder_channels=None,
         dims=2,
         channels_last=False,
@@ -293,7 +293,7 @@ class AttentionBlock(nn.Module):
             self.attention = QKVFlashAttention(channels, self.num_heads)
         else:
             # split heads before split qkv
-            self.attention = QKVAttention(self.num_heads)
+            self.attention = QKVAttentionLegacy(self.num_heads)
 
         self.use_attention_checkpoint = not (
             self.use_checkpoint or self.attention_type == "flash"
