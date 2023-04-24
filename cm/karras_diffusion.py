@@ -54,7 +54,7 @@ class KarrasDenoiser:
         self.num_timesteps = 40
 
     def get_snr(self, sigmas):
-        return sigmas**-2
+        return 1/(sigmas**2)
 
     def get_sigmas(self, sigmas):
         return sigmas
