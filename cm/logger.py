@@ -439,7 +439,7 @@ def mpi_weighted_mean(comm, local_name2valcount):
         return {}
 
 
-def configure(dir=None, format_strs=None, comm=None, log_suffix=""):
+def configure(dir='results', format_strs=None, comm=None, log_suffix=""):
     """
     If comm is provided, average all numerical stats across that comm
     """
@@ -448,7 +448,7 @@ def configure(dir=None, format_strs=None, comm=None, log_suffix=""):
     if dir is None:
         dir = osp.join(
             tempfile.gettempdir(),
-            datetime.datetime.now().strftime("openai-%Y-%m-%d-%H-%M-%S-%f"),
+            datetime.datetime.now().strftime("edm"),
         )
     assert isinstance(dir, str)
     dir = os.path.expanduser(dir)
